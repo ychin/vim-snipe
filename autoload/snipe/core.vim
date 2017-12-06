@@ -140,7 +140,7 @@ endfunction
 function! s:GetInput(message) " {{{
   echo a:message
   let ord = getchar()
-  normal :<c-u>
+  normal! :<c-u>
   return ord
 endfunction
 " }}}
@@ -217,9 +217,9 @@ function! s:GetWordTargets(motion) " {{{
   let orig_winview = winsaveview()
   let orig_curpos = getcurpos()
   if has_key(s:forward_motions, a:motion)
-    normal G$
+    normal! G$
   else
-    normal gg
+    normal! gg
   endif
   let endpos = getcurpos()
   call setpos('.', orig_curpos)
@@ -257,9 +257,9 @@ endfunction
 
 function! DoAndGoBack(f) " {{{
   let q_mark_pos = getpos("'q")
-  normal mq
+  normal! mq
   call a:f()
-  normal `q
+  normal! `q
   call setpos("'q", q_mark_pos)
 endfunction
 " }}}
@@ -280,7 +280,7 @@ function! snipe#core#DoSwap(motion) " {{{
     let saved = @"
     let did_jump = snipe#core#DoCharMotion(a:1, '')
     if did_jump
-      normal xp
+      normal! xp
     endif
     let @" = saved
   endfunction
@@ -292,7 +292,7 @@ function! snipe#core#DoCut(motion) " {{{
   function! DoCut(...)
     let did_jump = snipe#core#DoCharMotion(a:1, '')
     if did_jump
-      normal "_x
+      normal! "_x
     endif
   endfunction
   call DoAndGoBack(function('DoCut', [a:motion]))
